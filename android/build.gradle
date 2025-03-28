@@ -50,6 +50,15 @@ android {
             }
         }
     }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all { output ->
+            // Переименовываем выходные .so файлы для V2Ray
+            output.packageLibrary.exclude("lib/**/libgojni.so")
+            output.packageLibrary.include("lib/**/libv2rayjni.so")
+        }
+    }
+    
     sourceSets {
         main {
             jniLibs.srcDirs = ['src/main/jniLibs']
