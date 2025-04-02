@@ -206,12 +206,14 @@ public class FlutterV2rayPlugin implements FlutterPlugin, ActivityAware, PluginR
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE_VPN_PERMISSION) {
-            if (resultCode == Activity.RESULT_OK) {
-                pendingResult.success(true);
-            } else {
-                pendingResult.success(false);
-            }
-            pendingResult = null;
+            if (pendingResult != null) { // Ensure pendingResult is not null
+                if (resultCode == Activity.RESULT_OK) {
+                    pendingResult.success(true);
+                } else {
+                    pendingResult.success(false);
+                }
+                pendingResult = null; // Nullify after ensuring it's used
+            } 
         }
         return true;
     }
